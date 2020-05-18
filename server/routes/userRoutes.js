@@ -5,9 +5,11 @@ const userDatabase = require('../DataBase/mongoDB')
 
 //route to add connection
 router.post('/submitForm', (req, res) => {
-    userControls.submitForm(req.body)
-        .then(resp => res.status(200).send(resp))
-        .catch(err => res.status(400).send(err))
+    console.log(req.body)
+    res.send({ "msg": "Working" }).status(200)
+        // userControls.submitForm(req.body)
+        // .then(resp => res.status(200).send(resp))
+        // .catch(err => res.status(400).send(err))
 })
 
 

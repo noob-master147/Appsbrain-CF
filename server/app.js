@@ -8,22 +8,17 @@ app.use(cors());
 const chalk = require('chalk');
 const dotenv = require("dotenv");
 dotenv.config();
+const path = require('path')
 
 //Route imports
 const userRoute = require('./routes/userRoutes');
-
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.get('/', (req, res) => {
-    res.send({
-        statusCode: 200,
-        payload: {
-            msg: "The Backend is healthy and running",
-        },
-    }).status(200)
+    res.sendFile(path.join(__dirname, '../client/index.html'))
 })
 
 app.use('/user', userRoute)
