@@ -1,14 +1,17 @@
 const chalk = require('chalk')
-
+const { User } = require('../DataBase/mongoDB')
 
 const submitForm = (form) => {
-    return new Promise(async (resolve, reject) => {
-
-        //document here
-        await setTimeout(() => {
-
-        }, 5)
-            .then(async () => {
+    return new Promise(async(resolve, reject) => {
+        userData = new User({
+                name: form.name,
+                email: form.email,
+                number: form.number,
+                message: form.message
+            })
+            //document here
+        await userData.save()
+            .then(() => {
                 console.log(chalk.green("New Feedback added"))
                 resolve({
                     statusCode: 200,
