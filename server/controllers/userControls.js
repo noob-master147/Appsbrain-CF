@@ -1,7 +1,7 @@
 const chalk = require('chalk')
 const { User } = require('../DataBase/mongoDB')
-const nodemailer = require('nodemailer')
 
+//Store the details in DataBase
 const submitForm = (form) => {
     return new Promise(async(resolve, reject) => {
         userData = new User({
@@ -48,6 +48,7 @@ const submitForm = (form) => {
     })
 }
 
+//Function to send Mail after Form Submition
 const sendMail = (user) => {
     return new Promise((resolve, reject) => {
         console.log(chalk.green.bold('Sending Email...\n'))
