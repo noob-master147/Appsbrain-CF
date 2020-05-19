@@ -5,6 +5,6 @@ content-type: application/json
 {
     "name": "qwerty",
     "email": "asd@gmail.com",
-    "number": 1234567890,
+    "number": "1234567890",
     "message": "hello"
 }

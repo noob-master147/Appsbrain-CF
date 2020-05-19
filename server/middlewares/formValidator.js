@@ -6,7 +6,7 @@ const formValidator = (req, res, next) => {
     //store all the parameters of the request in constants
     const name = req.body.name.trim()
     const message = req.body.message.trim()
-    const number = req.body.number.trim()
+    const number = req.body.number
     const email = req.body.email.trim()
 
     //Array to store all the errors

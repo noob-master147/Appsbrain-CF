@@ -24,11 +24,14 @@ app.get('/', (req, res) => {
 app.use('/user', userRoute)
 
 // Database
-mongoose.connect('mongodb://localhost:27017', { useNewUrlParser: true, useUnifiedTopology: true }, () => {
-    console.log(chalk.green.bold('Connected to MongoDB'))
-})
-mongoose.set('useCreateIndex', true)
-mongoose.set('useFindAndModify', false)
+mongoose.connect('mongodb://localhost:27017/Feedback', {
+        useCreateIndex: true,
+        useNewUrlParser: true
+    },
+    () => {
+        console.log(chalk.green.bold('Connected to MongoDB'))
+    })
+
 
 
 const port = process.env.PORT || 8000

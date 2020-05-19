@@ -4,8 +4,7 @@ const mongoose = require('mongoose')
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     number: {
         type: Number,
@@ -13,13 +12,11 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     message: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     }
 });
 

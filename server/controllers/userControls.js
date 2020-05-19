@@ -1,35 +1,78 @@
 const chalk = require('chalk')
 const { User } = require('../DataBase/mongoDB')
+const nodemailer = require('nodemailer')
 
 const submitForm = (form) => {
     return new Promise(async(resolve, reject) => {
         userData = new User({
-                name: form.name,
-                email: form.email,
-                number: form.number,
-                message: form.message
-            })
-            //document here
+            name: form.name,
+            email: form.email,
+            number: form.number,
+            message: form.message
+        })
         await userData.save()
-            .then(() => {
+            .then(async() => {
+                console.log(form.email)
                 console.log(chalk.green("New Feedback added"))
-                resolve({
-                    statusCode: 200,
-                    payload: {
-                        msg: "Feedback Successfully Added"
-                    }
-                })
+                await sendMail(form)
+                    .then((data) => {
+                        resolve({
+                            statusCode: 200,
+                            payload: {
+                                msg: "Feedback Successfully Added",
+                                mail: data.msg
+                            }
+                        })
+                    })
+                    .catch((err) => {
+                        resolve({
+                            statusCode: 200,
+                            payload: {
+                                msg: "Feedback Successfully Added",
+                                mail: err.msg
+                            }
+                        })
+                    })
             })
-            .catch((e) => {
-                console.log(chalk.red("Error in saving Feedback details"))
+            .catch((err) => {
+                console.log(chalk.red(err))
                 reject({
                     statusCode: 400,
                     payload: {
-                        msg: "Server Side error contact support"
+                        msg: "Server Side error contact support",
+                        err: err
                     },
                 })
             })
 
+    })
+}
+
+const sendMail = (user) => {
+    return new Promise((resolve, reject) => {
+        console.log(chalk.green.bold('Sending Email...\n'))
+        const sgMail = require('@sendgrid/mail');
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+        const msg = {
+            to: user.email,
+            from: 'divyanshkhandelwal147@gmail.com',
+            subject: 'AppsBrain Feedback',
+            text: `Greetings from AppsBrain ${user.name}. Thankyou for your Feedback`
+        };
+        sgMail.send(msg)
+            .then(() => {
+                console.log("Mail Sent")
+                resolve({
+                    msg: "Mail Sent"
+                })
+            })
+            .catch((err) => {
+                console.log('Error:', err.response.body)
+                reject({
+                    msg: "Could Not Send Mail",
+                    err: err.response.body
+                })
+            })
     })
 }
 
